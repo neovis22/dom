@@ -88,12 +88,12 @@ class DOMElements {
             }
         */
         if (name = "_newEnum")
-            return {base:{next:DOMElements._nextEnum}, items:this[".ref"], i:0, length:this[".ref"].length}
+            return {base:{next:DOMElements._nextEnum}, elems:this[".ref"], doc:this[".doc"], i:0, length:this[".ref"].length}
         
         return (this[".ref"])[name](args*)
     }
     _nextEnum(byref i, byref v="") {
-        return this.i == this.length ? 0 : (1, v := this.items[i := this.i ++])
+        return this.i == this.length ? 0 : (1, v := new DOMElement(this.elems[i := this.i ++], this.doc))
     }
 }
 

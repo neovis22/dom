@@ -48,6 +48,10 @@ class DOMElement {
         for i, v in args
             if (IsObject(v) && ObjHasKey(v, ".ref"))
                 args[i] := v[".ref"]
+        
+        if (name = "select")
+            name := "querySelectorAll"
+        
         if (IsObject(res := (this[".ref"])[name](args*)))
             return isNodeList(this[".doc"], res)
                 ? new DOMElements(res, this[".doc"])
@@ -88,11 +92,11 @@ class DOMElements {
             }
         */
         if (name = "_newEnum")
-            return {base:{next:DOMElements._nextEnum}, elems:this[".ref"], doc:this[".doc"], i:0, length:this[".ref"].length}
+            return {base:{next:DOMElements._enumNext}, elems:this[".ref"], doc:this[".doc"], i:0, length:this[".ref"].length}
         
         return (this[".ref"])[name](args*)
     }
-    _nextEnum(byref i, byref v="") {
+    _enumNext(byref i, byref v="") {
         return this.i == this.length ? 0 : (1, v := new DOMElement(this.elems[i := this.i ++], this.doc))
     }
 }

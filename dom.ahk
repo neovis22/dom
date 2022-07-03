@@ -4,7 +4,7 @@
     https://github.com/neovis22/dom
 */
 
-dom(html, removeScripts=false) {
+dom(html, removeScripts=true) {
     doc := ComObjCreate("htmlfile")
     
     ; 가능한 최신모델로 로드

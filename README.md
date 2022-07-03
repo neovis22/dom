@@ -22,11 +22,11 @@ RunWait git clone https://github.com/neovis22/dom.git Lib/dom
 
 #### 기본 사용법
 ```ahk
-dom := dom(html, true)
+dom := dom(html)
 ```
 생성된 `dom`은 엘리먼트로 취급되며 `DOMElement` 클래스로 랩핑되고 엘리먼트의 메소드 및 속성을 사용할 수 있습니다.
 
-`html`코드안에 원치않는 스크립트 코드의 동작을 방지하고 싶다면 두번째 매개변수인 `removeScripts`를 `true`로 설정하세요.
+`html`내의 스크립트 코드는 자동실행을 방지하기 위해 빈 스크립트로 치환됩니다. 스크립트 코드를 유지하기 위해서는 `removeScripts`를 `false`로 설정하세요.
 
 #### 셀렉터를 이용한 엘리먼트를 탐색
 ```ahk
@@ -58,7 +58,7 @@ MsgBox % out ; Grape,Lemon
 항목에 접근하거나 열거시 자바스크립트와 통일성을 위해 인덱스는 `1`이 아닌 `0`부터 시작됩니다.
 
 ## Functions
-- `dom(html, removeScripts=false)`
+- `dom(html, removeScripts=true)`
 
 ## Contact
 [카카오톡 오픈 프로필](https://open.kakao.com/me/neovis)

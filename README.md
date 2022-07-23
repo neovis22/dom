@@ -47,9 +47,9 @@ html := "
 </div>
 )"
 
-dom := dom(html)
+doc := dom(html)
 
-for i, el in dom.querySelectorAll(".list-b ul.items li")
+for i, el in doc.querySelectorAll(".list-b ul.items li")
     out .= (a_index-1 ? "," : "") el.innerText
 MsgBox % out ; Grape,Lemon
 ```
@@ -58,7 +58,10 @@ MsgBox % out ; Grape,Lemon
 항목에 접근하거나 열거시 자바스크립트와 통일성을 위해 인덱스는 `1`이 아닌 `0`부터 시작됩니다.
 
 ## Functions
-- `dom(html, removeScripts=true)`
+- `doc := dom(html, removeScripts=true)`
+
+## DOMElement
+- `elements := element.select(selector)`
 
 ## Contact
 [카카오톡 오픈 프로필](https://open.kakao.com/me/neovis)

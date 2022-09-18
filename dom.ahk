@@ -44,15 +44,17 @@ class DOMElement {
         return this[".ref"][name] := IsObject(value) && ObjHasKey(value, ".ref") ? value[".ref"] : value
     }
     
-    __call(name, args*) {
+    __call(method, args*) {
         for i, v in args
             if (IsObject(v) && ObjHasKey(v, ".ref"))
                 args[i] := v[".ref"]
         
-        if (name = "select")
-            name := "querySelectorAll"
+        switch (method) {
+            case "qs": method := "querySelector"
+            case "qsa", "select": method := "querySelectorAll"
+        }
         
-        if (IsObject(res := (this[".ref"])[name](args*)))
+        if (IsObject(res := (this[".ref"])[method](args*)))
             return isNodeList(this[".doc"], res)
                 ? new DOMElements(res, this[".doc"])
                 : new DOMElement(res, this[".doc"])
@@ -76,7 +78,7 @@ class DOMElements {
             : value
     }
     
-    __call(name, args*) {
+    __call(method, args*) {
         /*
             for문으로 열거 가능하도록 열거함수 바인드
             * 열거시 인덱스는 0부터 시작
@@ -91,10 +93,10 @@ class DOMElements {
             for i, element in elements {
             }
         */
-        if (name = "_newEnum")
+        if (method = "_newEnum")
             return {base:{next:DOMElements._enumNext}, elems:this[".ref"], doc:this[".doc"], i:0, length:this[".ref"].length}
         
-        return (this[".ref"])[name](args*)
+        return (this[".ref"])[method](args*)
     }
     _enumNext(byref i, byref v="") {
         return this.i == this.length ? 0 : (1, v := new DOMElement(this.elems[i := this.i ++], this.doc))
